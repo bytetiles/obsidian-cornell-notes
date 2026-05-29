@@ -1,7 +1,7 @@
 {
   "id": "cornell-notes",
   "name": "Cornell Notes",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "minAppVersion": "1.4.0",
   "description": "Renders two-column Cornell Notes layouts.",
   "author": "Sergii Krymets",
