@@ -1,0 +1,11 @@
+{
+  "id": "cornell-notes",
+  "name": "Cornell Notes",
+  "version": "1.0.0",
+  "minAppVersion": "1.4.0",
+  "description": "Renders two-column Cornell Notes layouts",
+  "author": "Sergii Krymets",
+  "authorUrl": "https://github.com/bytetiles",
+  "icon": "plugin-icon.svg",
+  "isDesktopOnly": false
+}
