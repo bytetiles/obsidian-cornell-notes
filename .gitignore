@@ -15,3 +15,9 @@ Thumbs.db
 .claude/
 CLAUDE.md
 PUBLISHING.md
+RELEASE-HOWTO.md
+REPO-SECURITY.md
+
+# Environment / secrets (precaution)
+.env
+*.pem
