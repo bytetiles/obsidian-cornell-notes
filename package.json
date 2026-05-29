@@ -1,0 +1,20 @@
+{
+  "name": "cornell-notes",
+  "version": "1.0.0",
+  "description": "Obsidian plugin: Cornell Notes two-column block renderer",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "node esbuild.config.mjs production"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "builtin-modules": "^4.0.0",
+    "esbuild": "^0.21.0",
+    "obsidian": "latest",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "process": "^0.11.10"
+  }
+}

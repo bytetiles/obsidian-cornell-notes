@@ -1,0 +1,115 @@
+# Release How-To
+
+Releasing creates a tagged GitHub Release with the three required plugin assets
+(`main.js`, `manifest.json`, `styles.css`) automatically via GitHub Actions.
+No manual uploads needed after the first setup.
+
+---
+
+## One-time setup (do this before the first release)
+
+1. Push the repository to GitHub (see `PUBLISHING.md` -> Part 1)
+2. Confirm GitHub Actions is enabled:
+   **Repository -> Settings -> Actions -> General -> Allow all actions**
+3. No secrets to configure — the workflow uses the built-in `GITHUB_TOKEN`
+
+---
+
+## Regular release process
+
+### 1. Finish and test your changes
+
+Build locally and verify the plugin works in Obsidian before tagging:
+
+```powershell
+npm run build
+# Copy main.js + styles.css to your test vault and reload Obsidian
+```
+
+### 2. Bump the version
+
+Edit **both** files — they must stay in sync:
+
+| File            | Field       |
+|-----------------|-------------|
+| `manifest.json` | `"version"` |
+| `package.json`  | `"version"` |
+
+Version format: `MAJOR.MINOR.PATCH` (semantic versioning)
+
+| Change type | Example          | When to use                        |
+|-------------|------------------|------------------------------------|
+| Patch       | `1.0.0 -> 1.0.1` | Bug fixes, no new features         |
+| Minor       | `1.0.1 -> 1.1.0` | New features, backwards-compatible |
+| Major       | `1.1.0 -> 2.0.0` | Breaking changes                   |
+
+### 3. Commit the version bump
+
+```powershell
+git add manifest.json package.json
+git commit -m "Release 1.1.0"
+```
+
+### 4. Tag and push
+
+The tag **must exactly match** the version in `manifest.json`.
+The workflow rejects mismatches before creating the release.
+
+```powershell
+git tag 1.1.0
+git push
+git push --tags
+```
+
+### 5. Watch the build
+
+**Repository -> Actions** — a `Release` workflow run appears within seconds.
+
+It will:
+- Install dependencies (`npm ci`)
+- Build the plugin (`npm run build`)
+- Verify `main.js`, `manifest.json`, `styles.css` exist
+- Confirm the tag matches the manifest version
+- Create a published GitHub Release with those three files attached
+  and auto-generated release notes from commit messages
+
+Typical duration: **~60 seconds**.
+
+### 6. Verify the release
+
+**Repository -> Releases -> latest release**
+
+Confirm the three asset files are attached:
+- `main.js`
+- `manifest.json`
+- `styles.css`
+
+Obsidian will serve these to users on their next plugin update check.
+
+---
+
+## If something goes wrong
+
+**Workflow failed before creating the release** — fix the issue, then:
+
+```powershell
+# Delete the local and remote tag, re-tag after fixing
+git tag -d 1.1.0
+git push origin :refs/tags/1.1.0
+
+# Fix the issue, commit, re-tag
+git tag 1.1.0
+git push --tags
+```
+
+**Release was created but assets are wrong** — delete the release on GitHub
+(Releases -> Edit -> Delete), delete the tag as above, then re-tag.
+
+---
+
+## First-time community submission
+
+After the first release exists on GitHub, follow **Part 2** of `PUBLISHING.md`
+to submit the plugin to the Obsidian community plugins registry.
+That submission only needs to happen once — all future updates are picked up
+automatically from new GitHub Releases.

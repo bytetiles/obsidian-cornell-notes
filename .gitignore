@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Build sourcemaps (main.js must be committed; .map files must not)
+*.map
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+
+# Claude Code artifacts
+.claude/
+CLAUDE.md
+PUBLISHING.md

@@ -1,0 +1,81 @@
+.cornell-block {
+  margin: 1rem 0;
+}
+
+.cornell-header,
+.cornell-row {
+  display: grid;
+  grid-template-columns: 28% 72%;
+  gap: 0;
+}
+
+.cornell-header {
+  font-size: 0.78em;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+  border-bottom: 2px solid var(--background-modifier-border);
+  padding-bottom: 0.3rem;
+  margin-bottom: 0.25rem;
+}
+
+.cornell-row {
+  position: relative;
+  border-bottom: 1px solid var(--background-modifier-border);
+  padding: 0.6rem 0;
+  align-items: start;
+}
+
+/* Full-height vertical divider drawn on the row, not the cue cell */
+.cornell-row::before {
+  content: '';
+  position: absolute;
+  left: calc(28% - 1px);
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: var(--background-modifier-border);
+  pointer-events: none;
+}
+
+.cornell-cue {
+  padding-right: 1rem;
+  color: var(--text-muted);
+  font-size: 0.93em;
+}
+
+.cornell-note {
+  padding-left: 1rem;
+}
+
+.cornell-cue p,
+.cornell-note p {
+  margin: 0 0 0.25rem;
+}
+
+.cornell-cue p:last-child,
+.cornell-note p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 700px) {
+  .cornell-header,
+  .cornell-row {
+    grid-template-columns: 1fr;
+  }
+
+  .cornell-row::before {
+    display: none;
+  }
+
+  .cornell-cue {
+    border-bottom: 1px solid var(--background-modifier-border);
+    padding-right: 0;
+    padding-bottom: 0.4rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .cornell-note {
+    padding-left: 0;
+  }
+}
