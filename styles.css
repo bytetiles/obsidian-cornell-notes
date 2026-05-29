@@ -42,6 +42,7 @@
   padding-right: 1rem;
   color: var(--text-muted);
   font-size: 0.93em;
+  font-weight: bolder;
 }
 
 .cornell-note {

@@ -1,12 +1,16 @@
 # Dependencies
 node_modules/
 
-# Build sourcemaps (main.js must be committed; .map files must not)
+# Build output — attached to GitHub Releases by CI, not committed to the repo
+main.js
 *.map
 
 # OS
 .DS_Store
 Thumbs.db
+
+# Redundant media
+.media/*.png
 
 # IDEs
 .idea/
@@ -21,3 +25,4 @@ REPO-SECURITY.md
 # Environment / secrets (precaution)
 .env
 *.pem
+*.asc
