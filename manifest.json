@@ -3,7 +3,7 @@
   "name": "Cornell Notes",
   "version": "1.0.1",
   "minAppVersion": "1.4.0",
-  "description": "Renders two-column Cornell Notes layouts",
+  "description": "Renders two-column Cornell Notes layouts.",
   "author": "Sergii Krymets",
   "authorUrl": "https://github.com/bytetiles",
   "isDesktopOnly": false
