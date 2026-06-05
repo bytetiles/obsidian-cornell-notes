@@ -116,3 +116,36 @@ git push --tags
 
 **Release was created, but assets are wrong** — delete the release on GitHub
 (Releases → Edit → Delete), delete the tag as above, then re-tag.
+
+**Code didn't pass automatic community review**
+
+> A tag named **1.0.3** was created locally and pushed to the remote Git repository. I now need to remove this tag from both the local and remote repositories, submit additional changes to the `main` branch through a pull request, and then recreate and push the **1.0.3** tag after those changes have been merged.
+
+Remove a tag → push a fix → recreate the tag.
+
+```bash
+# Sync repo
+git checkout main
+git fetch origin --prune --tags
+git pull origin main
+
+# Delete tag locally and remotely
+git tag -d 1.0.3
+git push origin --delete 1.0.3
+
+# Create branch and push changes
+git checkout -b fix-or-update-for-1.0.3
+git add .
+git commit -m "Apply changes for version 1.0.3"
+git push origin fix-or-update-for-1.0.3
+
+# Open PR, merge into main, then update local main
+git checkout main
+git pull origin main
+
+# Re-create and push tag
+git tag -a 1.0.3 -m "Release 1.0.3"
+git push origin 1.0.3
+```
+
+Important note: reusing the same tag name can be risky because other developers, CI systems, package registries, or deployment tools may have already cached the old `1.0.3` tag. If this tag was already used for a public release, creating `1.0.4` is usually safer than moving/recreating `1.0.3`.

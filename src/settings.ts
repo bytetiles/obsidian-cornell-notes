@@ -46,7 +46,7 @@ export class CornellSettingTab extends PluginSettingTab {
     containerEl.empty();
 
     // ── Layout section ──────────────────────────────────────────────────────
-    containerEl.createEl('h3', { text: 'Layout' });
+    new Setting(containerEl).setName('Layout').setHeading();
 
     let cueWidthSliderComp!: SliderComponent;
     let cueWidthInputEl!: HTMLInputElement;
@@ -80,15 +80,15 @@ export class CornellSettingTab extends PluginSettingTab {
         text
           .setValue(String(this.plugin.settings.cueWidth))
           .setPlaceholder('28');
-        cueWidthInputEl.style.width = '5rem';
-        cueWidthInputEl.addEventListener('change', async () => {
+        text.inputEl.setCssStyles({ width: '5rem' });
+        cueWidthInputEl.addEventListener('change', () => {
           const raw = cueWidthInputEl.value.replace('%', '').trim();
           const parsed = parseFloat(raw);
           if (isNaN(parsed)) {
             cueWidthInputEl.value = String(this.plugin.settings.cueWidth);
             return;
           }
-          await updateWidth(parsed);
+          void updateWidth(parsed);
         });
         cueWidthInputEl.addEventListener('blur', () => {
           cueWidthInputEl.value = String(this.plugin.settings.cueWidth);
@@ -96,7 +96,7 @@ export class CornellSettingTab extends PluginSettingTab {
       });
 
     // ── Header section ──────────────────────────────────────────────────────
-    containerEl.createEl('h3', { text: 'Header' });
+    new Setting(containerEl).setName('Header').setHeading();
 
     let cueInputEl!: HTMLInputElement;
     let noteInputEl!: HTMLInputElement;
@@ -152,7 +152,7 @@ export class CornellSettingTab extends PluginSettingTab {
     setHeaderInputsDisabled(!this.plugin.settings.showHeader);
 
     // ── Borders section ──────────────────────────────────────────────────────
-    containerEl.createEl('h3', { text: 'Borders' });
+    new Setting(containerEl).setName('Borders').setHeading();
 
     let colorPickerComp!: ColorComponent;
     let colorResetBtnEl!: HTMLButtonElement;
