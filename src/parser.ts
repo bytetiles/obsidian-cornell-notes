@@ -13,6 +13,7 @@ export interface BlockOverrides {
   borderColor?: string;
   accentBorderThickness?: string;
   rowBorderThickness?: string;
+  cueWidth?: number;
 }
 
 export interface CornellBlock {
@@ -78,6 +79,22 @@ function parseDirectives(lines: string[]): BlockOverrides {
             console.warn(`[Cornell Notes] Unrecognized ::borders token: "${token}"`);
           }
         }
+      }
+      continue;
+    }
+
+    if (t.startsWith('::columns')) {
+      const token = t.slice('::columns'.length).trim();
+      const numeric = token.replace(/%$/, '');
+      const parsed = parseFloat(numeric);
+      if (isNaN(parsed)) {
+        console.warn(`[Cornell Notes] ::columns expects a number, got: "${token}"`);
+      } else {
+        const clamped = Math.max(10, Math.min(90, parsed));
+        if (clamped !== parsed) {
+          console.warn(`[Cornell Notes] ::columns value ${parsed} clamped to ${clamped} (allowed range 10–90)`);
+        }
+        overrides.cueWidth = clamped;
       }
       continue;
     }

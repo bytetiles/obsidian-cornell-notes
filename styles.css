@@ -5,7 +5,7 @@
 .cornell-header,
 .cornell-row {
   display: grid;
-  grid-template-columns: 28% 72%;
+  grid-template-columns: var(--cornell-cue-width, 28%) 1fr;
   gap: 0;
 }
 
@@ -33,7 +33,7 @@
 .cornell-row::before {
   content: '';
   position: absolute;
-  left: calc(28% - 1px);
+  left: var(--cornell-cue-width, 28%);
   top: 0;
   bottom: 0;
   width: 0;

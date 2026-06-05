@@ -9,11 +9,13 @@ Renders `cornell` fenced code blocks as a two-column
 
 ## Features
 
-- Two-column layout: **Cues / Questions** (28%) left, **Notes** (72%) right
+- Two-column layout with configurable column widths (default 28% cues / 72% notes)
 - Supports any Markdown in both columns: paragraphs, lists, tables,
   code blocks, callouts, math, mermaid diagrams, images, wikilinks
 - Mobile-responsive: columns stack vertically on narrow screens
 - Plain-text storage — readable and editable without the plugin
+- Configurable headers, borders, and column widths via the settings page
+  (or per-block with `::noheader`, `::header`, `::borders`, `::columns` directives)
 
 ---
 
@@ -72,6 +74,20 @@ Splits rows into logical groups inside the window.
 > **Always use 4 backticks** for the outer fence (` ````cornell `).
 > This lets you freely use triple-backtick code blocks inside.
 
+### Block directives
+
+Directives go before the first `::cue` in a block and override the vault-wide
+default for that block only. Vault-wide defaults are set in
+**Settings → Community plugins → Cornell Notes**.
+
+| Directive                          | Effect                                               |
+|------------------------------------|------------------------------------------------------|
+| `::noheader`                       | Hide the header row                                  |
+| `::header Cues \| Notes`           | Custom column labels (pipe-separated)                |
+| `::borders solid`                  | Border style: `solid` / `dashed` / `dotted` / `off` |
+| `::borders dashed 2pt/1pt #4A90D9` | Style + accent/row thickness + hex color             |
+| `::columns 20`                     | Cue column width in % (10–90)                        |
+
 ### Rich content examples
 
 **Code block in notes:**
@@ -111,7 +127,7 @@ graph LR
 ### Mobile view
 
 On screens narrower than 700 px the columns stack vertically
-(notes first, then cues below).
+(cues first, then notes below).
 
 ![mobile-note-example.webp](.media/mobile-note-example.webp)
 

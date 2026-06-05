@@ -1,4 +1,4 @@
-import { App, ColorComponent, PluginSettingTab, Setting } from 'obsidian';
+import { App, ColorComponent, PluginSettingTab, Setting, SliderComponent } from 'obsidian';
 import type CornellNotesPlugin from './main';
 import type { BorderStyle } from './parser';
 
@@ -10,6 +10,7 @@ export interface CornellSettings {
   borderColor: string;
   accentBorderThickness: string;
   rowBorderThickness: string;
+  cueWidth: number;
 }
 
 export const DEFAULT_SETTINGS: CornellSettings = {
@@ -20,6 +21,7 @@ export const DEFAULT_SETTINGS: CornellSettings = {
   borderColor: '',
   accentBorderThickness: '2pt',
   rowBorderThickness: '1pt',
+  cueWidth: 28,
 };
 
 const THICKNESS_RE = /^\d+(\.\d+)?(pt|px|em|rem)$/;
@@ -42,6 +44,56 @@ export class CornellSettingTab extends PluginSettingTab {
   display(): void {
     const { containerEl } = this;
     containerEl.empty();
+
+    // ── Layout section ──────────────────────────────────────────────────────
+    containerEl.createEl('h3', { text: 'Layout' });
+
+    let cueWidthSliderComp!: SliderComponent;
+    let cueWidthInputEl!: HTMLInputElement;
+    let widthSetting!: Setting;
+
+    const updateWidth = async (value: number) => {
+      const clamped = Math.max(10, Math.min(90, value));
+      this.plugin.settings.cueWidth = clamped;
+      await this.plugin.saveSettings();
+      cueWidthSliderComp.setValue(clamped);
+      cueWidthInputEl.value = String(clamped);
+      widthSetting.setDesc(`Cue ${clamped}% · Notes ${100 - clamped}%`);
+    };
+
+    widthSetting = new Setting(containerEl)
+      .setName('Cue column width')
+      .setDesc(
+        `Cue ${this.plugin.settings.cueWidth}% · Notes ${100 - this.plugin.settings.cueWidth}%`,
+      )
+      .addSlider(slider => {
+        cueWidthSliderComp = slider;
+        slider
+          .setLimits(10, 90, 1)
+          .setValue(this.plugin.settings.cueWidth)
+          .onChange(async value => {
+            await updateWidth(value);
+          });
+      })
+      .addText(text => {
+        cueWidthInputEl = text.inputEl;
+        text
+          .setValue(String(this.plugin.settings.cueWidth))
+          .setPlaceholder('28');
+        cueWidthInputEl.style.width = '5rem';
+        cueWidthInputEl.addEventListener('change', async () => {
+          const raw = cueWidthInputEl.value.replace('%', '').trim();
+          const parsed = parseFloat(raw);
+          if (isNaN(parsed)) {
+            cueWidthInputEl.value = String(this.plugin.settings.cueWidth);
+            return;
+          }
+          await updateWidth(parsed);
+        });
+        cueWidthInputEl.addEventListener('blur', () => {
+          cueWidthInputEl.value = String(this.plugin.settings.cueWidth);
+        });
+      });
 
     // ── Header section ──────────────────────────────────────────────────────
     containerEl.createEl('h3', { text: 'Header' });

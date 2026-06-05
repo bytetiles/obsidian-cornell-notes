@@ -14,6 +14,8 @@ export async function renderCornell(
 
   const blockEl = container.createDiv({ cls: 'cornell-block' });
 
+  blockEl.style.setProperty('--cornell-cue-width', `${effective.cueWidth}%`);
+
   if (effective.borderStyle === 'off') {
     blockEl.classList.add('cornell-no-borders');
   } else {
