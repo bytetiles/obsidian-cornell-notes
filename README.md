@@ -80,13 +80,13 @@ Directives go before the first `::cue` in a block and override the vault-wide
 default for that block only. Vault-wide defaults are set in
 **Settings → Community plugins → Cornell Notes**.
 
-| Directive                          | Effect                                               |
-|------------------------------------|------------------------------------------------------|
-| `::noheader`                       | Hide the header row                                  |
-| `::header Cues \| Notes`           | Custom column labels (pipe-separated)                |
+| Directive                          | Effect                                              |
+|------------------------------------|-----------------------------------------------------|
+| `::noheader`                       | Hide the header row                                 |
+| `::header Cues \| Notes`           | Custom column labels (pipe-separated)               |
 | `::borders solid`                  | Border style: `solid` / `dashed` / `dotted` / `off` |
-| `::borders dashed 2pt/1pt #4A90D9` | Style + accent/row thickness + hex color             |
-| `::columns 20`                     | Cue column width in % (10–90)                        |
+| `::borders dashed 2pt/1pt #4A90D9` | Style + accent/row thickness + hex color            |
+| `::columns 20`                     | Cue column width in % (10–90)                       |
 
 ### Rich content examples
 

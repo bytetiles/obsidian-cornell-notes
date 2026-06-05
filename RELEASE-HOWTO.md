@@ -8,9 +8,9 @@ No manual uploads needed after the first setup.
 
 ## One-time setup (do this before the first release)
 
-1. Push the repository to GitHub (see `PUBLISHING.md` -> Part 1)
-2. Confirm GitHub Actions is enabled:
-   **Repository -> Settings -> Actions -> General -> Allow all actions**
+1. Push the repository to GitHub
+2. Confirm GitHub Actions are enabled:
+   **Repository → Settings → Actions → General → Allow all actions**
 3. No secrets to configure — the workflow uses the built-in `GITHUB_TOKEN`
 
 ---
@@ -26,6 +26,13 @@ npm run build
 # Copy main.js + styles.css to your test vault and reload Obsidian
 ```
 
+Manual checklist:
+- [ ] Cornell block renders correctly in Reading view
+- [ ] Settings page opens: **Settings → Community plugins → Cornell Notes**
+- [ ] Header toggle, label inputs, border controls, column width slider all work
+- [ ] Per-block directives (`::noheader`, `::header`, `::borders`, `::columns`) override vault defaults
+- [ ] Settings persist after reloading Obsidian
+
 ### 2. Bump the version
 
 Edit **both** files — they must stay in sync:
@@ -37,11 +44,16 @@ Edit **both** files — they must stay in sync:
 
 Version format: `MAJOR.MINOR.PATCH` (semantic versioning)
 
-| Change type | Example          | When to use                        |
-|-------------|------------------|------------------------------------|
-| Patch       | `1.0.0 -> 1.0.1` | Bug fixes, no new features         |
-| Minor       | `1.0.1 -> 1.1.0` | New features, backwards-compatible |
-| Major       | `1.1.0 -> 2.0.0` | Breaking changes                   |
+| Change type | Example          | When to use                                                                       |
+|-------------|------------------|-----------------------------------------------------------------------------------|
+| Patch       | `1.0.0 -> 1.0.1` | Bug fixes, no new features                                                        |
+| Minor       | `1.0.1 -> 1.1.0` | New features, backwards-compatible; new settings fields with defaults             |
+| Major       | `1.1.0 -> 2.0.0` | Breaking changes; renaming/removing settings fields (breaks existing `data.json`) |
+
+> **Settings file:** Obsidian stores plugin settings in `.obsidian/plugins/cornell-notes/data.json`.
+> This file is user-specific — never commit or distribute it.
+> Adding new fields with defaults is safe (Minor). Renaming or removing fields breaks
+> existing user settings and requires a Major bump.
 
 ### 3. Commit the version bump
 
@@ -77,7 +89,7 @@ Typical duration: **~60 seconds**.
 
 ### 6. Verify the release
 
-**Repository -> Releases -> latest release**
+**Repository → Releases → latest release**
 
 Confirm the three asset files are attached:
 - `main.js`
@@ -102,14 +114,5 @@ git tag 1.1.0
 git push --tags
 ```
 
-**Release was created but assets are wrong** — delete the release on GitHub
-(Releases -> Edit -> Delete), delete the tag as above, then re-tag.
-
----
-
-## First-time community submission
-
-After the first release exists on GitHub, follow **Part 2** of `PUBLISHING.md`
-to submit the plugin to the Obsidian community plugins registry.
-That submission only needs to happen once — all future updates are picked up
-automatically from new GitHub Releases.
+**Release was created, but assets are wrong** — delete the release on GitHub
+(Releases → Edit → Delete), delete the tag as above, then re-tag.
