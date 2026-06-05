@@ -26,3 +26,5 @@ REPO-SECURITY.md
 .env
 *.pem
 *.asc
+
+data.json
